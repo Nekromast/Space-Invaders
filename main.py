@@ -1,5 +1,6 @@
 import pygame
 import os
+import enemies
 
 WIDTH, HEIGHT = 1000, 720
 SHIPWIDTH, SHIPHEIGHT = 80, 100
@@ -10,6 +11,13 @@ WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 PLAYERSHIP = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'ship.png')), (SHIPWIDTH, SHIPHEIGHT))
 BACKGROUND = pygame.image.load(os.path.join('assets', 'background.gif'))
 
+class Game:
+    def __init__(self):
+        pass
+    def run(self):
+        pass
+    
+    
 def shots(bullets, player):
     for bullet in bullets:
         bullet.y -= BULLET_SPEED
@@ -36,6 +44,7 @@ def draw_window(player, bullets):
     pygame.display.update()
 
 def main():
+    pygame.init()
     player = pygame.Rect(WIDTH//2, HEIGHT//2, 40, 50)
     health = 5
     bullets = []
