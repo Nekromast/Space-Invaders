@@ -6,6 +6,7 @@ WIDTH, HEIGHT = 1000, 720
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
+        super().__init__()
         self.image = main.PLAYERSHIP
         self.rect = self.image.get_rect()
         self.rect = pygame.Rect(WIDTH//2, HEIGHT//2, 40, 50)

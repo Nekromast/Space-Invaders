@@ -39,8 +39,8 @@ def main():
     pygame.init()
     """player = pygame.Rect(WIDTH//2, HEIGHT//2, 40, 50)"""
     player = mainplayer.Player()
-    enemy1 = enemies.Enemy("ship")
-
+    """enemy1 = enemies.Enemy("ship")"""
+    enemy1 = enemies.Enemy("ss_ship")
     clock = pygame.time.Clock()
     run = True
     while run:
