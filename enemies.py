@@ -6,10 +6,11 @@ from sys import exit
 from random import randint, choice
 
 ss = spritesheet.spritesheet('assets/Enemies T1 Sprite Sheet from Carvel.png')
+
+
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, shiptype):
         super().__init__()
-
 
         if shiptype == "ship":
             ene_ship = pygame.transform.rotate(pygame.image.load('assets/ship.png').convert_alpha(), 180)

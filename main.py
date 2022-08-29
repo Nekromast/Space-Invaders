@@ -1,10 +1,7 @@
-
 import os
-
 import pygame
-
 import enemies
-
+import special_attack
 import mainplayer
 
 WIDTH, HEIGHT = 1000, 720
@@ -17,11 +14,14 @@ PLAYERSHIP = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'sh
 BACKGROUND = pygame.image.load(os.path.join('assets', 'background.gif'))
 BULLET = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'laserBullet.png')), (70, 70))
 
+
 class Game:
     def __init__(self):
         pass
+
     def run(self):
         pass
+
 
 def draw_window(player, e1):
     WINDOW.fill((0, 0, 0))  # black background
@@ -30,10 +30,12 @@ def draw_window(player, e1):
     WINDOW.blit(e1.image, (e1.rect.x, e1.rect.y))
 
     for bullet in player.bullets:
-        WINDOW.blit(BULLET, (bullet.x, bullet.y))
+        WINDOW.blit(BULLET, (bullet.rect.x, bullet.rect.y))
     for bullet in player.special_bullets:
-        WINDOW.blit(BULLET, (bullet.x, bullet.y))
+        WINDOW.blit(BULLET, (bullet.rect.x, bullet.rect.y))
+
     pygame.display.update()
+
 
 def main():
     pygame.init()
