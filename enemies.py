@@ -2,25 +2,27 @@ import main
 import pygame
 import os
 from sys import exit
-from random import randint,choice
+from random import randint, choice
+
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self,type):
+    def __init__(self, shiptype):
         super().__init__()
-        
-        if type =='ship':
-            ene_ship = pygame.image.load('assets/ship.png').convert_alpha()
-            
-            x_pos = randint(0,720) 
+
+        if shiptype == "ship":
+            ene_ship = pygame.transform.rotate(pygame.image.load('assets/ship.png').convert_alpha(), 180)
+            ene_ship = pygame.transform.scale(ene_ship, (70, 70))
+            x_pos = randint(0, 720)
 
             self.image = ene_ship
             self.rect = self.image.get_rect()
-            
+            self.rect.x = x_pos
+
     def update(self):
         self.rect.y += 5
         if self.rect.y > 720:
             self.kill()
-            
+
     def destroy(self):
         if self.rect.y > 800 or self.rect.y < -100:
             self.kill()

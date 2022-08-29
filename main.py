@@ -1,6 +1,11 @@
-import pygame
+
 import os
+
+import pygame
+
 import enemies
+
+import mainplayer
 
 WIDTH, HEIGHT = 1000, 720
 SHIPWIDTH, SHIPHEIGHT = 80, 100
@@ -10,44 +15,31 @@ WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 
 PLAYERSHIP = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'ship.png')), (SHIPWIDTH, SHIPHEIGHT))
 BACKGROUND = pygame.image.load(os.path.join('assets', 'background.gif'))
+BULLET = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'laserBullet.png')), (70, 70))
 
 class Game:
     def __init__(self):
         pass
     def run(self):
         pass
-    
-    
-def shots(bullets, player):
-    for bullet in bullets:
-        bullet.y -= BULLET_SPEED
 
-def movement(keys_pressed, player):
-    if keys_pressed[pygame.K_w] and player.y - SPEED > 0:  # oben
-        player.y -= SPEED
-    if keys_pressed[pygame.K_a] and player.x + SPEED > 0:  # links
-        player.x -= SPEED
-    if keys_pressed[pygame.K_s] and player.y - SPEED < HEIGHT - player.height*2:  # unten
-        player.y += SPEED
-    if keys_pressed[pygame.K_d] and player.x + SPEED + player.width*2 < WIDTH:  # rechts
-        player.x += SPEED
+def draw_window(player, e1):
+    WINDOW.fill((0, 0, 0))  # black background
 
-def draw_window(player, bullets):
-    WINDOW.fill((0, 0, 0)) # black background
+    WINDOW.blit(PLAYERSHIP, (player.rect.x, player.rect.y))
+    WINDOW.blit(e1.image, (e1.rect.x, e1.rect.y))
 
-    WINDOW.blit(PLAYERSHIP, (player.x, player.y))
-    
-    for bullet in bullets:
-        pygame.draw.rect(WINDOW, (255, 0, 0), bullet)
-
-
+    for bullet in player.bullets:
+        WINDOW.blit(BULLET, (bullet.x, bullet.y))
+    for bullet in player.special_bullets:
+        WINDOW.blit(BULLET, (bullet.x, bullet.y))
     pygame.display.update()
 
 def main():
     pygame.init()
-    player = pygame.Rect(WIDTH//2, HEIGHT//2, 40, 50)
-    health = 5
-    bullets = []
+    """player = pygame.Rect(WIDTH//2, HEIGHT//2, 40, 50)"""
+    player = mainplayer.Player()
+    enemy1 = enemies.Enemy("ship")
 
     clock = pygame.time.Clock()
     run = True
@@ -56,16 +48,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    bullet = pygame.Rect(player.x + player.width - 2, player.y + 10, 5, 10)
-                    bullets.append(bullet)
-                
-        shots(bullets, player)         
-        keys_pressed = pygame.key.get_pressed()
-        movement(keys_pressed, player)
 
-        draw_window(player, bullets)
+        mainplayer.Player.update(player)
+        enemies.Enemy.update(enemy1)
+
+        draw_window(player, enemy1)
+
 
 if __name__ == '__main__':
     main()
