@@ -1,6 +1,7 @@
 import pygame
 import os
 import enemies
+from player import Player
 
 WIDTH, HEIGHT = 1000, 720
 SHIPWIDTH, SHIPHEIGHT = 80, 100
@@ -13,7 +14,10 @@ BACKGROUND = pygame.image.load(os.path.join('assets', 'background.gif'))
 
 class Game:
     def __init__(self):
-        pass
+        player_sprite = Player()
+        self.player = pygame.sprite.GroupSingle(player_sprite)
+        
+        enemies = pygame.sprite.Group()
     def run(self):
         pass
     
