@@ -28,25 +28,25 @@ class Game:
         self.score = 0
         self.clock.tick(60)
 
-        #Groups
+        # Groups
         player_sprite = Player()
         self.player = pygame.sprite.GroupSingle(player_sprite)
 
         self.ene_group = pygame.sprite.Group()
 
-        #Intro Screen
+        # Intro Screen
         game_font = pygame.font.Font('freesansbold.ttf', 100)
         self.game_name = game_font.render('Space Boi', True, (255, 255, 255))
-        self.game_name_rect = self.game_name.get_rect(center = (WIDTH/2, HEIGHT/2))
+        self.game_name_rect = self.game_name.get_rect(center=(WIDTH / 2, HEIGHT / 2))
 
         self.game_message = game_font.render('Press Space to Start', True, (255, 255, 255))
-        self.game_message_rect = self.game_message.get_rect(center = (WIDTH/2, HEIGHT/2 + 100))
-        #Timers
+        self.game_message_rect = self.game_message.get_rect(center=(WIDTH / 2, HEIGHT / 2 + 100))
+        # Timers
         self.enemy_timer = pygame.USEREVENT + 1
         pygame.time.set_timer(self.enemy_timer, 1000)
 
     def run_game(self):
-        #game loop
+        # game loop
         while True:
             self.check_events()
             self.update_screen()
@@ -56,7 +56,7 @@ class Game:
             self.player.update()
             self.ene_group.update()
             self.player.draw(self.screen)
-            #self.player.sprite.bullets.draw(self.screen)
+            # self.player.sprite.bullets.draw(self.screen)
             self.ene_group.draw(self.screen)
 
         else:
@@ -65,8 +65,9 @@ class Game:
             self.screen.blit(self.game_message, self.game_message_rect)
 
         pygame.display.update()
-    #update all sprite groups
-    #draw all sprite groups
+
+    # update all sprite groups
+    # draw all sprite groups
 
     def check_events(self):
         for event in pygame.event.get():
@@ -83,9 +84,8 @@ class Game:
                     self.run = True
                     self.start_time = pygame.time.get_ticks()
 
+    # handle event loop
 
-
-    #handle event loop
 
 if __name__ == '__main__':
     space_game = Game()

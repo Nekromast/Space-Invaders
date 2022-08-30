@@ -10,7 +10,7 @@ WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 BULLET = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'laserBullet.png')), (70, 70))
 
 
-class SpecialAttack:
+class SpecialAttack(pygame.sprite.Sprite):
 
     def __init__(self, bullet_rect, side):
         super().__init__()

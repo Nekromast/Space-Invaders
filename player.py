@@ -16,6 +16,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect = pygame.Rect(WIDTH // 2, HEIGHT // 2, 40, 50)
         self.bullets = pygame.sprite.Group()
+        self.special_bullets = pygame.sprite.Group()
 
     def player_input(self):
         keys = pygame.key.get_pressed()
@@ -32,7 +33,7 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_SPACE]:
             self.bullets.add(bullets.Bullet(bullet_rect, "friendly"))
         if keys[pygame.K_f]:
-            self.special_bullets.append(special_attack.SpecialAttack(bullet_rect, "friendly"))
+            self.special_bullets.add(special_attack.SpecialAttack(bullet_rect, "friendly"))
 
     def update(self):
         self.player_input()
