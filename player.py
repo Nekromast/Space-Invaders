@@ -1,10 +1,8 @@
 import timeit
-
 import pygame
 import main
 import bullets
 import time
-
 import special_attack
 
 BULLET_SPEED = 20
@@ -17,8 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.image = main.PLAYERSHIP
         self.rect = self.image.get_rect()
         self.rect = pygame.Rect(WIDTH // 2, HEIGHT // 2, 40, 50)
-        self.bullets = []
-        self.special_bullets = []
+        self.bullets = pygame.sprite.Group()
 
     def player_input(self):
         keys = pygame.key.get_pressed()
@@ -33,7 +30,7 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_d] and self.rect.x + main.SPEED + self.rect.width * 2 < main.WIDTH:  # rechts
             self.rect.x += main.SPEED
         if keys[pygame.K_SPACE]:
-            self.bullets.append(bullets.Bullet(bullet_rect, "friendly"))
+            self.bullets.add(bullets.Bullet(self.rect.center,"friendly"))
         if keys[pygame.K_f]:
             self.special_bullets.append(special_attack.SpecialAttack(bullet_rect, "friendly"))
 

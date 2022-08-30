@@ -9,17 +9,15 @@ class Bullet(pygame.sprite.Sprite):
     def __init__(self, bullet_rect, side):
         super().__init__()
         self.image = main.BULLET
-        self.rect = pygame.Rect(bullet_rect)
-        self.bullets = []
-        self.side = side
+        self.rect = rect
         if side == "friendly":
-            pass
+           self.speed = BULLET_SPEED * -1
         if side == "enemy":
-            pass
+            self.speed = BULLET_SPEED
 
     def shots(self):
         bullet = self.rect
-        bullet.y -= 2
+        bullet.y += self.speed
 
     def update(self):
         self.shots()
