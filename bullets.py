@@ -7,7 +7,8 @@ SPECIAL_SPEED = 15
 
 class Bullet(pygame.sprite.Sprite):
 
-    def __init__(self, bullet_rect, side, type, i=0):
+
+    def __init__(self, bullet_rect, side, type, i = 0):
         super().__init__()
         self.image = main.BULLET
         self.rect = pygame.Rect(bullet_rect)
@@ -19,18 +20,28 @@ class Bullet(pygame.sprite.Sprite):
         if type == "normal":
             if side == "friendly":
                 self.speed = BULLET_SPEED * -1
-            else:
-                self.speed = BULLET_SPEED
+            elif side == "enemy":
+                self.speed = BULLET_SPEED     
+                ene_laser = pygame.image.load('assets/ene_laser.png')
+                ene_laser2 = pygame.image.load('assets/ene_laser2.png')
+                ene_laser3 = pygame.image.load('assets/ene_laser3.png')
+                ene_laser4 = pygame.image.load('assets/ene_laser4.png')
+                self.animation_index = 0
+                self.frames = [ene_laser, ene_laser2, ene_laser3, ene_laser4]
+                self.image = self.frames[self.animation_index]
         else:
             pass
+            
 
-    def shots(self, type, i):
-        if type == "normal":
+    def shots(self):
+        if self.type == "normal" and self.side == "friendly":
             bullet = self.rect
             bullet.y += self.speed
-
-        else:
-            match i:
+        elif self.type == 'normal' and self.side == 'enemy':
+            bullet = self.rect
+            bullet.y -= self.speed
+        elif self.type == 'special' and self.side == 'friendly':
+            match self.i:
                 case 0:  # NW
                     self.rect.x -= SPECIAL_SPEED
                     self.rect.y -= SPECIAL_SPEED
@@ -52,8 +63,17 @@ class Bullet(pygame.sprite.Sprite):
                 case 7:  # W
                     self.rect.x -= SPECIAL_SPEED
 
+
+
+    def animation_state(self):
+        self.animation_index += 0.1
+        if self.animation_index >= len(self.frames): self.animation_index = 0
+        self.image = self.frames[int(self.animation_index)]
+        
     def update(self):
-        self.shots(self.type, self.i)
+        self.shots()
+        if self.side == "enemy":
+            self.animation_state
         self.destroy()
 
     def destroy(self):

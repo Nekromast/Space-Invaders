@@ -35,9 +35,9 @@ class Game:
 
 
         # Intro Screen
-        game_font = pygame.font.Font('freesansbold.ttf', 100)
+        game_font = pygame.font.Font('freesansbold.ttf', 32)
         self.game_name = game_font.render('Space Boi', True, (255, 255, 255))
-        self.game_name_rect = self.game_name.get_rect(center=(WIDTH / 2, HEIGHT / 2))
+        self.game_name_rect = self.game_name.get_rect(center=(WIDTH / 2, HEIGHT  -200))
 
         self.game_message = game_font.render('Press Space to Start', True, (255, 255, 255))
         self.game_message_rect = self.game_message.get_rect(center=(WIDTH / 2, HEIGHT / 2 + 100))
@@ -65,6 +65,7 @@ class Game:
                         sound.play()
 
     def update_screen(self):
+
         if self.run:  # Stoppt als while nie (bisher ohne Condition)
             self.screen.fill('black')
             self.screen.blit(BACKGROUND, (0, 0))
@@ -72,6 +73,8 @@ class Game:
             self.ene_group.update()  # not a screen update, but a technical update
             self.player.draw(self.screen)
             self.ene_group.draw(self.screen)
+            for ship in self.ene_group:
+                ship.ene_lasers.draw(self.screen)
             self.player.sprite.bullets.draw(self.screen)  # sprite.bullets works!
         else:
             """self.screen.fill('black')"""
@@ -92,7 +95,6 @@ class Game:
 
             if self.run:
                 if event.type == self.enemy_timer:
-                    """self.ene_group.add(enemies.Enemy(choice["ship"]))"""
                     self.ene_group.add(enemies.Enemy(choice(["ss_ship", "ship"])))
             else:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
