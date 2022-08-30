@@ -45,7 +45,7 @@ class Game:
         self.game_message_rect = self.game_message.get_rect(center=(WIDTH / 2, HEIGHT / 2 + 100))
         # Timers
         self.enemy_timer = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.enemy_timer, 1000)
+        pygame.time.set_timer(self.enemy_timer, 750)
 
     def run_game(self):
         # game loop
@@ -61,7 +61,7 @@ class Game:
             for bullet in self.player.sprite.bullets.sprites():
                 if pygame.sprite.collide_rect(bullet, enemy):
                     bullet.kill()
-                    sound.play().set_volume(randint(0.25,0.50))
+                    sound.play().set_volume(0.25)
                     # ignore health warning
                     enemy.health -= 1
                     if enemy.health <= 0:
