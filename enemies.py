@@ -5,7 +5,6 @@ import pygame
 import os
 from random import randint
 
-
 ss = spritesheet.spritesheet('assets/Enemies T1 Sprite Sheet from Carvel.png')
 
 
@@ -24,7 +23,6 @@ class Enemy(pygame.sprite.Sprite):
             self.spawn_time = pygame.time.get_ticks() + randint(1000, 2000)
             self.spawn_cooldown = 1000
 
-
         if shiptype == "ship_diag_LtoR":
             ene_ship = pygame.transform.rotate(pygame.image.load('assets/ship.png').convert_alpha(), -45)
             ene_ship = pygame.transform.scale(ene_ship, (70, 70))
@@ -38,7 +36,6 @@ class Enemy(pygame.sprite.Sprite):
         self.image = ene_ship
         self.rect = self.image.get_rect()
         self.rect.x = x_pos
-
 
     def update(self):
         self.rect.y += 5

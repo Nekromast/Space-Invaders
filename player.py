@@ -30,7 +30,7 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_d] and self.rect.x + main.SPEED + self.rect.width * 2 < main.WIDTH:  # rechts
             self.rect.x += main.SPEED
         if keys[pygame.K_SPACE]:
-            self.bullets.add(bullets.Bullet(self.rect.center,"friendly"))
+            self.bullets.add(bullets.Bullet(bullet_rect, "friendly"))
         if keys[pygame.K_f]:
             self.special_bullets.append(special_attack.SpecialAttack(bullet_rect, "friendly"))
 

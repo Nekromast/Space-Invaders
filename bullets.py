@@ -9,7 +9,8 @@ class Bullet(pygame.sprite.Sprite):
     def __init__(self, bullet_rect, side):
         super().__init__()
         self.image = main.BULLET
-        self.rect = rect
+        self.rect = pygame.Rect(bullet_rect)
+        self.side = side
         if side == "friendly":
            self.speed = BULLET_SPEED * -1
         if side == "enemy":

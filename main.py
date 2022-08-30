@@ -2,7 +2,7 @@ import os
 import pygame
 import enemies
 import special_attack
-from mainplayer import Player
+from player import Player
 from sys import exit
 from random import randint, choice
 
