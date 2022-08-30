@@ -1,5 +1,5 @@
-import os
 import pygame
+import os
 import enemies
 import special_attack
 import mainplayer
@@ -17,10 +17,17 @@ BULLET = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'laserB
 
 class Game:
     def __init__(self):
-        pass
+        player_sprite = Player()
+        self.player = pygame.sprite.GroupSingle(player_sprite)
 
+        enemies = pygame.sprite.Group()
     def run(self):
         pass
+    
+    
+def shots(bullets, player):
+    for bullet in bullets:
+        bullet.y -= BULLET_SPEED
 
 
 def draw_window(player, e1):
