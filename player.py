@@ -1,22 +1,20 @@
-import timeit
 import pygame
 import main
 import bullets
-import time
-import special_attack
 
 BULLET_SPEED = 20
 WIDTH, HEIGHT = 1000, 720
+WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, screen):
         super().__init__()
+        self.screen = screen
         self.image = main.PLAYERSHIP
         self.rect = self.image.get_rect()
         self.rect = pygame.Rect(WIDTH // 2, HEIGHT // 2, 40, 50)
         self.bullets = pygame.sprite.Group()
-        self.special_bullets = pygame.sprite.Group()
 
     def player_input(self):
         keys = pygame.key.get_pressed()
@@ -31,19 +29,11 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_d] and self.rect.x + main.SPEED + self.rect.width * 2 < main.WIDTH:  # rechts
             self.rect.x += main.SPEED
         if keys[pygame.K_SPACE]:
-            self.bullets.add(bullets.Bullet(bullet_rect, "friendly"))
+            self.bullets.add(bullets.Bullet(bullet_rect, "friendly", "normal", None))
         if keys[pygame.K_f]:
-            self.special_bullets.add(special_attack.SpecialAttack(bullet_rect, "friendly"))
+            for i in range(8):
+                self.bullets.add(bullets.Bullet(bullet_rect, "friendly", "special", i))
 
     def update(self):
         self.player_input()
-        self.shoot()
-
-    def shoot(self):
-        for bullet in self.bullets:
-            bullet.update()
-
-        for special in self.special_bullets:
-            special.update()
-
-
+        self.bullets.update()

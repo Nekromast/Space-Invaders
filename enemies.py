@@ -18,8 +18,14 @@ class Enemy(pygame.sprite.Sprite):
         if shiptype == "ship":
             ene_ship = pygame.transform.rotate(pygame.image.load('assets/ship.png').convert_alpha(), 180)
             ene_ship = pygame.transform.scale(ene_ship, (70, 70))
-            x_pos = randint(70, main.WIDTH - 70)
-         
+            x_pos = randint(100, main.WIDTH - 70)
+            self.ready = False
+            self.spawn_time = pygame.time.get_ticks() + randint(1000, 2000)
+            self.spawn_cooldown = 1000
+
+        if shiptype == "ss_ship":
+            ene_ship = ss.image_at((7, 7, 18, 15))
+
         if shiptype == "ship_diag_LtoR":
             ene_ship = pygame.transform.rotate(pygame.image.load('assets/ship.png').convert_alpha(), -45)
             ene_ship = pygame.transform.scale(ene_ship, (70, 70))
