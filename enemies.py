@@ -2,8 +2,7 @@ import main
 import spritesheet
 import pygame
 import os
-from sys import exit
-from random import randint, choice
+from random import randint
 
 ss = spritesheet.spritesheet('assets/Enemies T1 Sprite Sheet from Carvel.png')
 
