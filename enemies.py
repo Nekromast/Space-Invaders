@@ -37,7 +37,7 @@ class Enemy(pygame.sprite.Sprite):
             self.frames = [ene_ship2, ene_ship3, ene_ship4]
             x_pos = randint(70, main.WIDTH - 70)
 
-        if shiptype == "ship_diag_LtoR":
+        """if shiptype == "ship_diag_LtoR":
             ene_ship2 = pygame.transform.rotate(pygame.image.load('assets/ene_ship2.png'), +45)
             ene_ship3 = pygame.transform.rotate(pygame.image.load('assets/ene_ship3.png'), +45)
             ene_ship4 = pygame.transform.rotate(pygame.image.load('assets/ene_ship4.png'), +45)
@@ -57,7 +57,7 @@ class Enemy(pygame.sprite.Sprite):
             ene_ship3 = pygame.transform.scale(ene_ship3, (70, 70))
             ene_ship4 = pygame.transform.scale(ene_ship4, (70, 70))
             x_pos = main.WIDTH
-            self.frames = [ene_ship2, ene_ship3, ene_ship4]
+            self.frames = [ene_ship2, ene_ship3, ene_ship4]"""
 
         self.animation_index = 0
         self.image = self.frames[self.animation_index]
@@ -69,13 +69,13 @@ class Enemy(pygame.sprite.Sprite):
         if type == 'ship' or 'ss_ship':
             self.rect.y += SHIP_SPEED
 
-        if type == 'ship_diag_LtoR':
+        """if type == 'ship_diag_LtoR':
             self.rect.y += SHIP_SPEED / 2
             self.rect.x += SHIP_SPEED
 
         if type == 'ship_diag_RtoL':
             self.rect.y += SHIP_SPEED / 2
-            self.rect.x -= SHIP_SPEED
+            self.rect.x -= SHIP_SPEED """
 
     def update(self):
         self.movement(self.type)

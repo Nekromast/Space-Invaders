@@ -75,9 +75,9 @@ class Game:
                     lasers.kill()
                     self.health -= 1
                     if self.health <= 0:
-                        self.reset()
+                        self.run = False
+                        
     def reset(self):
-        self.run = False
         self.health = 10
         self.score = 0
         for ship2 in self.ene_group:
@@ -105,10 +105,14 @@ class Game:
             self.player.sprite.bullets.draw(self.screen)  # sprite.bullets works!
         else:
             """self.screen.fill('black')"""
+            score_message = self.game_font.render(f'Score: {self.score}', False, (111, 196, 169))
+            score_message_rect = score_message.get_rect(center=(WIDTH / 2, HEIGHT * 0.25))
             self.screen.blit(BACKGROUND, (0, 0))
             self.screen.blit(self.game_name, self.game_name_rect)
             self.screen.blit(self.game_message, self.game_message_rect)
-
+            
+            if self.score > 0:
+                self.screen.blit(score_message, score_message_rect)
         pygame.display.update()
         self.clock.tick(60)
 
@@ -128,6 +132,7 @@ class Game:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     self.run = True
                     self.start_time = pygame.time.get_ticks()
+                    self.reset()
 
     # handle event loop
 
