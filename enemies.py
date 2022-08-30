@@ -1,4 +1,3 @@
-from turtle import width
 import main
 import spritesheet
 import pygame
@@ -11,7 +10,7 @@ ss = spritesheet.spritesheet('assets/Enemies T1 Sprite Sheet from Carvel.png')
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, shiptype):
         super().__init__()
-
+        self.health = 5
         ene_ship = 0
         x_pos = 0
 
