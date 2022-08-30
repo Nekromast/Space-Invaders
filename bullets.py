@@ -19,13 +19,13 @@ class Bullet(pygame.sprite.Sprite):
 
         if type == "normal":
             if side == "friendly":
-                self.speed = BULLET_SPEED * -1
+                self.speed = BULLET_SPEED
             elif side == "enemy":
-                self.speed = BULLET_SPEED     
-                ene_laser = pygame.image.load('assets/ene_laser.png')
-                ene_laser2 = pygame.image.load('assets/ene_laser2.png')
-                ene_laser3 = pygame.image.load('assets/ene_laser3.png')
-                ene_laser4 = pygame.image.load('assets/ene_laser4.png')
+                self.speed = BULLET_SPEED / 2
+                ene_laser = pygame.transform.scale(pygame.image.load('assets/ene_laser.png'), (15, 15))
+                ene_laser2 = pygame.transform.scale(pygame.image.load('assets/ene_laser2.png'), (15, 15))
+                ene_laser3 = pygame.transform.scale(pygame.image.load('assets/ene_laser3.png'), (15, 15))
+                ene_laser4 = pygame.transform.scale(pygame.image.load('assets/ene_laser4.png'), (15, 15))
                 self.animation_index = 0
                 self.frames = [ene_laser, ene_laser2, ene_laser3, ene_laser4]
                 self.image = self.frames[self.animation_index]
@@ -36,10 +36,10 @@ class Bullet(pygame.sprite.Sprite):
     def shots(self):
         if self.type == "normal" and self.side == "friendly":
             bullet = self.rect
-            bullet.y += self.speed
+            bullet.y -= self.speed
         elif self.type == 'normal' and self.side == 'enemy':
             bullet = self.rect
-            bullet.y -= self.speed
+            bullet.y += self.speed
         elif self.type == 'special' and self.side == 'friendly':
             match self.i:
                 case 0:  # NW

@@ -18,7 +18,9 @@ BULLET = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'laserB
 
 class Game:
     def __init__(self):
-        pygame.mixer.pre_init(48000, 16, 2, 4096)
+        pygame.mixer.pre_init(48000, 16, 1, 4096)
+        pygame.mixer.init()
+        pygame.mixer.fadeout(200)
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("Space Boi")
@@ -26,6 +28,7 @@ class Game:
         self.run = False
         self.start_time = 0
         self.score = 0
+        self.health = 10
 
         # Groups
         player_sprite = Player(self.screen)
@@ -33,13 +36,12 @@ class Game:
 
         self.ene_group = pygame.sprite.Group()
 
-
         # Intro Screen
-        game_font = pygame.font.Font('freesansbold.ttf', 32)
-        self.game_name = game_font.render('Space Boi', True, (255, 255, 255))
-        self.game_name_rect = self.game_name.get_rect(center=(WIDTH / 2, HEIGHT  -200))
+        self.game_font = pygame.font.Font('freesansbold.ttf', 32)
+        self.game_name = self.game_font.render('Space Boi', True, (255, 255, 255))
+        self.game_name_rect = self.game_name.get_rect(center=(WIDTH / 2, HEIGHT - 200))
 
-        self.game_message = game_font.render('Press Space to Start', True, (255, 255, 255))
+        self.game_message = self.game_font.render('Press Space to Start', True, (255, 255, 255))
         self.game_message_rect = self.game_message.get_rect(center=(WIDTH / 2, HEIGHT / 2 + 100))
         # Timers
         self.enemy_timer = pygame.USEREVENT + 1
@@ -49,28 +51,53 @@ class Game:
         # game loop
         while True:
             self.check_events()
-            self.collision()
+            self.enemy_collision()
+            self.player_collision()
             self.update_screen()
 
-    def collision(self):
-        sound = pygame.mixer.Sound("assets/ha-gay_16.wav")
+    def enemy_collision(self):
+        sound = pygame.mixer.Sound("assets/pew.wav")
         for enemy in self.ene_group.sprites():
             for bullet in self.player.sprite.bullets.sprites():
                 if pygame.sprite.collide_rect(bullet, enemy):
                     bullet.kill()
+                    sound.play()
                     # ignore health warning
                     enemy.health -= 1
                     if enemy.health <= 0:
                         enemy.kill()
-                        sound.play()
+                        self.score += 5
+
+    def player_collision(self):
+        for ship in self.ene_group:
+            for lasers in ship.ene_lasers:
+                if pygame.sprite.collide_rect(lasers, self.player.sprite):
+                    lasers.kill()
+                    self.health -= 1
+                    if self.health <= 0:
+                        self.reset()
+    def reset(self):
+        self.run = False
+        self.health = 10
+        self.score = 0
+        for ship2 in self.ene_group:
+            ship2.ene_lasers.empty()
+        self.ene_group.empty()
+        self.player.sprite.bullets.empty()
 
     def update_screen(self):
 
         if self.run:  # Stoppt als while nie (bisher ohne Condition)
             self.screen.fill('black')
             self.screen.blit(BACKGROUND, (0, 0))
-            self.player.update()  # not a screen update, but a technical update
-            self.ene_group.update()  # not a screen update, but a technical update
+            # Health and Score bar
+            healthtext = self.game_font.render("Health: " + str(self.health), True, (255, 255, 255))
+            scoretext = self.game_font.render("Score: " + str(self.score), True, (255, 255, 255))
+            self.screen.blit(healthtext, (10, HEIGHT - 60))
+            self.screen.blit(scoretext, (WIDTH - 200, HEIGHT - 60))
+
+            self.player.update()
+            self.ene_group.update()
             self.player.draw(self.screen)
             self.ene_group.draw(self.screen)
             for ship in self.ene_group:
@@ -84,6 +111,7 @@ class Game:
 
         pygame.display.update()
         self.clock.tick(60)
+
     # update all sprite groups
     # draw all sprite groups
 
