@@ -2,7 +2,7 @@ import pygame
 import os
 import enemies
 import special_attack
-import mainplayer
+from player import Player
 
 WIDTH, HEIGHT = 1000, 720
 SHIPWIDTH, SHIPHEIGHT = 80, 100
@@ -38,18 +38,14 @@ def draw_window(player, e1):
 
     for bullet in player.bullets:
         WINDOW.blit(BULLET, (bullet.rect.x, bullet.rect.y))
-    """for bullet in player.special_bullets:
-        WINDOW.blit(BULLET, (bullet.rect.x, bullet.rect.y))"""
 
     pygame.display.update()
 
 
 def main():
     pygame.init()
-    """player = pygame.Rect(WIDTH//2, HEIGHT//2, 40, 50)"""
-    player = mainplayer.Player()
-    """enemy1 = enemies.Enemy("ship")"""
-    enemy1 = enemies.Enemy("ss_ship")
+    player = Player()
+    enemy1 = enemies.Enemy("ship")
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -58,7 +54,7 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
 
-        mainplayer.Player.update(player)
+        Player.update(player)
         enemies.Enemy.update(enemy1)
 
         draw_window(player, enemy1)

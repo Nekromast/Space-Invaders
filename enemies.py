@@ -13,7 +13,10 @@ ss = spritesheet.spritesheet('assets/Enemies T1 Sprite Sheet from Carvel.png')
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, shiptype):
         super().__init__()
-        
+
+        ene_ship = 0
+        x_pos = 0
+
         if shiptype == "ship":
             ene_ship = pygame.transform.rotate(pygame.image.load('assets/ship.png').convert_alpha(), 180)
             ene_ship = pygame.transform.scale(ene_ship, (70, 70))
