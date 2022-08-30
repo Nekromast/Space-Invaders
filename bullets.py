@@ -10,15 +10,14 @@ class Bullet(pygame.sprite.Sprite):
         super().__init__()
         self.image = main.BULLET
         self.rect = rect
-        self.bullets = []
         if side == "friendly":
-            pass
+           self.speed = BULLET_SPEED * -1 
         if side == "enemy":
-            pass
+            self.speed = BULLET_SPEED
 
     def shots(self):
         bullet = self.rect
-        bullet.y -= BULLET_SPEED
+        bullet.y += self.speed
 
     def update(self):
         self.shots()
