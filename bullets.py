@@ -8,10 +8,10 @@ SPECIAL_SPEED = 15
 class Bullet(pygame.sprite.Sprite):
 
 
-    def __init__(self, bullet_rect, side, type, i = 0):
+    def __init__(self, x,y, side, type, i = 0):
         super().__init__()
-        self.image = main.BULLET
-        self.rect = pygame.Rect(bullet_rect)
+        
+        
         self.side = side
         self.speed = 0
         self.type = type
@@ -19,6 +19,8 @@ class Bullet(pygame.sprite.Sprite):
 
         if type == "normal":
             if side == "friendly":
+                self.image = pygame.transform.scale(main.BULLET,(15, 15))
+                
                 self.speed = BULLET_SPEED
             elif side == "enemy":
                 self.speed = BULLET_SPEED / 2
@@ -29,9 +31,9 @@ class Bullet(pygame.sprite.Sprite):
                 self.animation_index = 0
                 self.frames = [ene_laser, ene_laser2, ene_laser3, ene_laser4]
                 self.image = self.frames[self.animation_index]
-        else:
-            pass
-            
+        elif type == "special":
+            self.image = pygame.transform.scale(main.BULLET, (15, 15))
+        self.rect = self.image.get_rect(center = (x, y))    
 
     def shots(self):
         if self.type == "normal" and self.side == "friendly":
@@ -73,7 +75,7 @@ class Bullet(pygame.sprite.Sprite):
     def update(self):
         self.shots()
         if self.side == "enemy":
-            self.animation_state
+            self.animation_state()
         self.destroy()
 
     def destroy(self):

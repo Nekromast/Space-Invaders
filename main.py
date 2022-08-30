@@ -7,7 +7,7 @@ from random import randint, choice
 
 WIDTH, HEIGHT = 1000, 720
 SHIPWIDTH, SHIPHEIGHT = 80, 100
-SPEED = 5
+SPEED = 7
 BULLET_SPEED = 20
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 
@@ -18,11 +18,11 @@ BULLET = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'laserB
 
 class Game:
     def __init__(self):
-        pygame.mixer.pre_init(48000, 16, 1, 4096)
+        pygame.mixer.pre_init(44100, -16, 2, 4096)
         pygame.mixer.init()
         pygame.mixer.fadeout(200)
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.screen = WINDOW
         pygame.display.set_caption("Space Boi")
         self.clock = pygame.time.Clock()
         self.run = False
@@ -56,12 +56,12 @@ class Game:
             self.update_screen()
 
     def enemy_collision(self):
-        sound = pygame.mixer.Sound("assets/pew.wav")
+        sound = pygame.mixer.Sound("assets/pew.ogg")
         for enemy in self.ene_group.sprites():
             for bullet in self.player.sprite.bullets.sprites():
                 if pygame.sprite.collide_rect(bullet, enemy):
                     bullet.kill()
-                    sound.play()
+                    sound.play().set_volume(randint(0.25,0.50))
                     # ignore health warning
                     enemy.health -= 1
                     if enemy.health <= 0:
@@ -123,7 +123,7 @@ class Game:
 
             if self.run:
                 if event.type == self.enemy_timer:
-                    self.ene_group.add(enemies.Enemy(choice(["ss_ship", "ship"])))
+                    self.ene_group.add(enemies.Enemy(choice(["ss_ship"])))
             else:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     self.run = True

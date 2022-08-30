@@ -12,8 +12,7 @@ SHIP_SPEED = 5
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, shiptype):
         super().__init__()
-        self.health = 5
-        ene_ship = 0
+        self.health = 0
         x_pos = 0
         self.type = shiptype
         self.ene_lasers = pygame.sprite.Group()
@@ -26,7 +25,8 @@ class Enemy(pygame.sprite.Sprite):
             x_pos = randint(100, main.WIDTH - 70)
             self.frames = [ene_ship]
 
-        if shiptype == "ss_ship":
+        if shiptype == "ss_ship": 
+            self.health = 2
             ene_ship2 = pygame.image.load('assets/ene_ship2.png')
             ene_ship3 = pygame.image.load('assets/ene_ship3.png')
             ene_ship4 = pygame.image.load('assets/ene_ship4.png')
@@ -97,12 +97,12 @@ class Enemy(pygame.sprite.Sprite):
     def shoot(self):
         bullet_rect = (self.rect.x + self.rect.width / 2 - 8, self.rect.y + self.rect.height, 20, 20)
         if self.ready:
-            bullet = bullets.Bullet(bullet_rect, 'enemy', 'normal')
+            bullet = bullets.Bullet(self.rect.centerx,self.rect.centery, 'enemy', 'normal')
             self.ene_lasers.add(bullet)
             self.shoot_time = pygame.time.get_ticks()
             self.ready = False
             self.recharge()
 
     def recharge(self):
-        if pygame.time.get_ticks() - self.shoot_time > 1000:
+        if pygame.time.get_ticks() - self.shoot_time > randint(1500, 2500):
             self.ready = True
