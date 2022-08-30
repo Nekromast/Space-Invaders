@@ -31,8 +31,8 @@ def draw_window(player, e1):
 
     for bullet in player.bullets:
         WINDOW.blit(BULLET, (bullet.rect.x, bullet.rect.y))
-    for bullet in player.special_bullets:
-        WINDOW.blit(BULLET, (bullet.rect.x, bullet.rect.y))
+    """for bullet in player.special_bullets:
+        WINDOW.blit(BULLET, (bullet.rect.x, bullet.rect.y))"""
 
     pygame.display.update()
 

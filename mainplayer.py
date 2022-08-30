@@ -22,9 +22,8 @@ class Player(pygame.sprite.Sprite):
 
     def player_input(self):
         keys = pygame.key.get_pressed()
-        bullet_rect = pygame.Rect(self.rect.x + self.rect.width // 2 + 5, self.rect.y, 5, 10)
-        bullet1 = bullets.Bullet(bullet_rect, "friendly")
-        special1 = special_attack.SpecialAttack(bullet_rect, "friendly")
+        bullet_rect = (self.rect.x + self.rect.width // 2 + 5, self.rect.y, 5, 10)
+
         if keys[pygame.K_w] and self.rect.y - main.SPEED > 0:  # oben
             self.rect.y -= main.SPEED
         if keys[pygame.K_a] and self.rect.x + main.SPEED > 0:  # links
@@ -34,9 +33,9 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_d] and self.rect.x + main.SPEED + self.rect.width * 2 < main.WIDTH:  # rechts
             self.rect.x += main.SPEED
         if keys[pygame.K_SPACE]:
-            self.bullets.append(bullet1)
+            self.bullets.append(bullets.Bullet(bullet_rect, "friendly"))
         if keys[pygame.K_f]:
-            self.special_bullets.append(special1)
+            self.special_bullets.append(special_attack.SpecialAttack(bullet_rect, "friendly"))
 
     def update(self):
         self.player_input()
@@ -44,9 +43,9 @@ class Player(pygame.sprite.Sprite):
 
     def shoot(self):
         for bullet in self.bullets:
-            bullet.shots()
+            bullet.update()
 
         for special in self.special_bullets:
-            special.shots()
+            special.update()
 
 
