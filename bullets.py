@@ -26,6 +26,6 @@ class Bullet(pygame.sprite.Sprite):
 
     def destroy(self):
         if (self.rect.y > 720) or (self.rect.y < 0 + self.rect.height):
-            del self
-        elif (self.rect.x > 1000 + self.rect.width) or (self.rect.x < 0):
-            del self
+            self.kill()
+        elif (self.rect.x > 720 + self.rect.width) or (self.rect.x < 0):
+            self.kill()

@@ -35,9 +35,9 @@ class Game:
         self.ene_group = pygame.sprite.Group()
 
         # Intro Screen
-        game_font = pygame.font.Font('freesansbold.ttf', 100)
+        game_font = pygame.font.Font('freesansbold.ttf', 32)
         self.game_name = game_font.render('Space Boi', True, (255, 255, 255))
-        self.game_name_rect = self.game_name.get_rect(center=(WIDTH / 2, HEIGHT / 2))
+        self.game_name_rect = self.game_name.get_rect(center=(WIDTH / 2, HEIGHT  -200))
 
         self.game_message = game_font.render('Press Space to Start', True, (255, 255, 255))
         self.game_message_rect = self.game_message.get_rect(center=(WIDTH / 2, HEIGHT / 2 + 100))
