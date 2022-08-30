@@ -1,7 +1,6 @@
 import os
 import pygame
 import enemies
-import special_attack
 from player import Player
 from sys import exit
 from random import randint, choice
@@ -26,13 +25,13 @@ class Game:
         self.run = False
         self.start_time = 0
         self.score = 0
-        self.clock.tick(60)
 
         # Groups
-        player_sprite = Player()
+        player_sprite = Player(self.screen)
         self.player = pygame.sprite.GroupSingle(player_sprite)
 
         self.ene_group = pygame.sprite.Group()
+
 
         # Intro Screen
         game_font = pygame.font.Font('freesansbold.ttf', 100)
@@ -52,20 +51,21 @@ class Game:
             self.update_screen()
 
     def update_screen(self):
-        while self.run:
+        if self.run:  # Stoppt als while nie
+            self.screen.fill('black')
             self.player.update()
             self.ene_group.update()
             self.player.draw(self.screen)
             # self.player.sprite.bullets.draw(self.screen)
             self.ene_group.draw(self.screen)
-
+            self.player.sprite.bullets.draw(self.screen)
         else:
             self.screen.fill('black')
             self.screen.blit(self.game_name, self.game_name_rect)
             self.screen.blit(self.game_message, self.game_message_rect)
 
         pygame.display.update()
-
+        self.clock.tick(60)
     # update all sprite groups
     # draw all sprite groups
 
@@ -77,8 +77,8 @@ class Game:
 
             if self.run:
                 if event.type == self.enemy_timer:
-                    self.ene_group.add(enemies.Enemy(choice['ss_ship']))
-
+                    """self.ene_group.add(enemies.Enemy(choice["ship"]))"""
+                    self.ene_group.add(enemies.Enemy(choice(["ss_ship", "ship"])))
             else:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     self.run = True
