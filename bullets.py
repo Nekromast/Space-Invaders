@@ -7,6 +7,7 @@ SPECIAL_SPEED = 15
 
 class Bullet(pygame.sprite.Sprite):
 
+
     def __init__(self, bullet_rect, side, type, i = 0):
         super().__init__()
         self.image = main.BULLET

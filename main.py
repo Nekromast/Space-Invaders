@@ -12,12 +12,13 @@ BULLET_SPEED = 20
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 
 PLAYERSHIP = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'ship.png')), (SHIPWIDTH, SHIPHEIGHT))
-BACKGROUND = pygame.image.load(os.path.join('assets', 'background.gif'))
+BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'background.jpg')), (WIDTH, HEIGHT))
 BULLET = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'laserBullet.png')), (70, 70))
 
 
 class Game:
     def __init__(self):
+        pygame.mixer.pre_init(48000, 16, 2, 4096)
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("Space Boi")
@@ -48,22 +49,36 @@ class Game:
         # game loop
         while True:
             self.check_events()
+            self.collision()
             self.update_screen()
 
+    def collision(self):
+        sound = pygame.mixer.Sound("assets/ha-gay_16.wav")
+        for enemy in self.ene_group.sprites():
+            for bullet in self.player.sprite.bullets.sprites():
+                if pygame.sprite.collide_rect(bullet, enemy):
+                    bullet.kill()
+                    # ignore health warning
+                    enemy.health -= 1
+                    if enemy.health <= 0:
+                        enemy.kill()
+                        sound.play()
+
     def update_screen(self):
-        if self.run:  # Stoppt als while nie
-            self.screen.fill('green')
-            self.player.update()
-            self.ene_group.update()
+
+        if self.run:  # Stoppt als while nie (bisher ohne Condition)
+            self.screen.fill('black')
+            self.screen.blit(BACKGROUND, (0, 0))
+            self.player.update()  # not a screen update, but a technical update
+            self.ene_group.update()  # not a screen update, but a technical update
             self.player.draw(self.screen)
-            # self.player.sprite.bullets.draw(self.screen)
             self.ene_group.draw(self.screen)
-            self.player.sprite.bullets.draw(self.screen)
             for ship in self.ene_group:
                 ship.ene_lasers.draw(self.screen)
-
+            self.player.sprite.bullets.draw(self.screen)  # sprite.bullets works!
         else:
-            self.screen.fill('green')
+            """self.screen.fill('black')"""
+            self.screen.blit(BACKGROUND, (0, 0))
             self.screen.blit(self.game_name, self.game_name_rect)
             self.screen.blit(self.game_message, self.game_message_rect)
 

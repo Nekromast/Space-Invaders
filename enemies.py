@@ -11,7 +11,7 @@ SHIP_SPEED = 5
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, shiptype):
         super().__init__()
-
+        self.health = 5
         ene_ship = 0
         x_pos = 0
         self.type = shiptype
